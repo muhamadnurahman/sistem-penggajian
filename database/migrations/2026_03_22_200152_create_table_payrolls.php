@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('payroll', function (Blueprint $table) {
+        Schema::create('payrolls', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->foreignUuid('employee_id')->constrained('employees');
             $table->decimal('salary', 10, 2);

@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained('users');
             $table->foreignUuid('role_id')->constrained('roles');
             $table->foreignUuid('department_id')->constrained('departments');
-            $table->string('fullname');
+            $table->string('name');
             $table->string('email')->unique();
             $table->string('phone_number');
             $table->string('address');
