@@ -17,11 +17,9 @@ class EmployeeSeeder extends Seeder
     public function run(): void
     {
         $departement = Department::first();
-        $user = User::first();
         $role = Role::first();
 
         Employee::create([
-            'user_id' => $user->id,
             'role_id' => $role->id,
             'department_id' => $departement->id,
             'name' => 'Nur Rachman',

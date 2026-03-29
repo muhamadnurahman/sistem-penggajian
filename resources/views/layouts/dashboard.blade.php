@@ -12,6 +12,8 @@
     <link rel="stylesheet" href="{{ asset('mazer/dist/assets/compiled/css/app.css') }}">
     <link rel="stylesheet" href="{{ asset('mazer/dist/assets/compiled/css/app-dark.css') }}">
     <link rel="stylesheet" href="{{ asset('mazer/dist/assets/compiled/css/iconly.css') }}">
+    <link rel="stylesheet" href="{{ asset('mazer/dist/assets/extensions/simple-datatables/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('mazer/dist/assets/extensions/table-datatables.css') }}">
 </head>
 
 <body>
@@ -65,19 +67,19 @@
                     <ul class="menu">
                         <li class="sidebar-title">Menu</li>
                         <li class="sidebar-item active ">
-                            <a href="index.html" class='sidebar-link'>
+                            <a href="" class='sidebar-link'>
                                 <i class="bi bi-grid-fill"></i>
                                 <span>Dashboard</span>
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a href="index.html" class='sidebar-link'>
+                            <a href="{{ route('employees.index') }}" class='sidebar-link'>
                                 <i class="bi bi-people-fill"></i>
                                 <span>Employees</span>
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a href="index.html" class='sidebar-link'>
+                            <a href="{{ route('departments.index') }}" class='sidebar-link'>
                                 <i class="bi bi-briefcase"></i>
                                 <span>Departments</span>
                             </a>
@@ -104,10 +106,9 @@
                 </div>
             </div>
         </div>
-        <div id="main">
     
         @yield('content')
-        
+
             <footer>
                 <div class="footer clearfix mb-0 text-muted">
                     <div class="float-start">
@@ -132,6 +133,10 @@
     <!-- Need: Apexcharts -->
     <script src="{{ asset('mazer/dist/assets/extensions/apexcharts/apexcharts.min.js') }}"></script>
     <script src="{{ asset('mazer/dist/assets/static/js/pages/dashboard.js') }}"></script>
+
+    {{-- buat handle database --}}
+    <script src="{{ asset('mazer/dist/assets/extensions/simple-datatables/umd/simple-datatables.js') }}"></script>
+    <script src="{{ asset('mazer/dist/assets/static/js/pages/simple-datatables.js') }}"></script>
 
 </body>
 

@@ -11,10 +11,9 @@ class Employee extends Model
     use HasUuids, SoftDeletes;
 
     protected $fillable = [
-        'user_id',
         'role_id',
         'department_id',
-        'fullname',
+        'name',
         'email',
         'phone_number',
         'address',
@@ -22,4 +21,14 @@ class Employee extends Model
         'salary',
         'status',
     ];
+
+    public function department()
+    {
+        return $this->belongsTo(Department::class);
+    }
+
+    public function role()
+    {
+        return $this->belongsTo(Role::class);
+    }
 }
