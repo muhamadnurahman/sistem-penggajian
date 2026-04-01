@@ -18,8 +18,10 @@ class EmployeeSeeder extends Seeder
     {
         $departement = Department::first();
         $role = Role::first();
+        $user = User::first();
 
         Employee::create([
+            'user_id' => $user->id,
             'role_id' => $role->id,
             'department_id' => $departement->id,
             'name' => 'Nur Rachman',
@@ -27,7 +29,6 @@ class EmployeeSeeder extends Seeder
             'phone_number' => '081234567890',
             'address' => 'Jl. pramuka no 123',
             'hire_date' => '2026-01-01',
-            'salary' => 5000000,
             'status' => 'active',
         ]);
     }

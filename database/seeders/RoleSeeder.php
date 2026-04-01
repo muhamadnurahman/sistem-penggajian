@@ -16,16 +16,19 @@ class RoleSeeder extends Seeder
         Role::create([
             'name' => 'Admin',
             'description' => 'Memiliki akses penuh ke semua fitur dan data dalam sistem penggajian.',
+            'redirect_to' => 'dashboard',
         ]);
 
         Role::create([
             'name' => 'HRD',
             'description' => 'Bertanggung jawab untuk mengelola data karyawan, penggajian, dan laporan keuangan.',
+            'redirect_to' => 'dashboard',
         ]);
 
         Role::create([
             'name' => 'Employee',
             'description' => 'Dapat melihat informasi gaji mereka sendiri dan mengajukan permintaan kasbon.',
+            'redirect_to' => 'employee.dashboard',
         ]);
     }
 }
