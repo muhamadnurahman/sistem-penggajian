@@ -80,11 +80,6 @@
                         </p>
                     </div>
 
-                    <div class="mb-3">
-                        <label for="">Salary</label>
-                        <p>{{ $employee->salary }}</p>
-                    </div>
-
                     <a href="{{ route('employees.index') }}" class="btn btn-secondary">Back</a>
                 </div>
 

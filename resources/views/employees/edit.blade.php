@@ -125,14 +125,6 @@
                                 @enderror
                             </div>
 
-                            <div class="mb-3">
-                                <label for="salary" class="form-label">Salary</label>
-                                <input type="number" class="form-control" id="salary" name="salary" value="{{ old('salary', $employee->salary) }}" required>
-                                @error('salary')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
-
                             <button type="submit" class="btn btn-primary">Update Employee</button>
                             <a href="{{ route('employees.index') }}" class="btn btn-secondary">Back to List</a>
 
