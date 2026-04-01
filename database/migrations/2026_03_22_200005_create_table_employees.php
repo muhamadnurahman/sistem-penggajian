@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('employees', function (Blueprint $table) {
             $table->uuid('id')->primary();
+            $table->foreignId('user_id')->nullable()->constrained('users');
             $table->foreignUuid('role_id')->constrained('roles');
             $table->foreignUuid('department_id')->constrained('departments');
             $table->string('name');
@@ -20,7 +21,6 @@ return new class extends Migration
             $table->string('phone_number');
             $table->string('address');
             $table->date('hire_date');
-            $table->decimal('salary', 10, 2);
             $table->string('status');
             $table->timestamps();
             $table->softDeletes();
