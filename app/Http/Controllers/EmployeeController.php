@@ -11,7 +11,8 @@ class EmployeeController extends Controller
 {
     public function index()
     {
-        $employees = Employee::all();
+        $employees = Employee::with(['role', 'department', 'payrolls'])->get();
+
         return view('employees.index', compact('employees'));
     }
 
@@ -29,12 +30,11 @@ class EmployeeController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|email',
             'phone_number' => 'required|string|max:15',
-            'address' => 'nullable|required',
+            'address' => 'nullable|string',
             'hire_date' => 'required|date',
             'department_id' => 'required',
             'role_id' => 'required',
             'status' => 'required|string',
-            'salary' => 'required|numeric',
         ]);
 
         Employee::create($validatedData);
@@ -44,7 +44,7 @@ class EmployeeController extends Controller
 
     public function show($id)
     {
-        $employee = Employee::findOrFail($id);
+        $employee = Employee::with(['role', 'department', 'payrolls'])->findOrFail($id);
 
         return view('employees.show', compact('employee'));
     }
@@ -66,12 +66,11 @@ class EmployeeController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|email',
             'phone_number' => 'required|string|max:15',
-            'address' => 'nullable|required',
+            'address' => 'nullable|string',
             'hire_date' => 'required|date',
             'department_id' => 'required',
             'role_id' => 'required',
             'status' => 'required|string',
-            'salary' => 'required|numeric',
         ]);
 
         $employee->update($validatedData);

@@ -15,9 +15,7 @@ class DepartmentController extends Controller
 
     public function create()
     {
-        $departments = Department::all();
-
-        return view('departments.create', compact('departments'));
+        return view('departments.create');
     }
 
     public function store(Request $request)
