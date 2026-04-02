@@ -27,9 +27,11 @@ class PayrollController extends Controller
             'salary' => 'required|numeric',
             'bonuses' => 'nullable|numeric',
             'deductions' => 'nullable|numeric',
-            'net_salary' => 'required|numeric',
             'pay_date' => 'required|date',
         ]);
+
+        $netSalary = $validatedData['salary'] + ($validatedData['bonuses'] ?? 0) - ($validatedData['deductions'] ?? 0);
+        $validatedData['net_salary'] = $netSalary;
 
         Payroll::create($validatedData);
 
@@ -58,10 +60,10 @@ class PayrollController extends Controller
             'salary' => 'required|numeric',
             'bonuses' => 'nullable|numeric',
             'deductions' => 'nullable|numeric',
-            'net_salary' => 'required|numeric',
             'pay_date' => 'required|date',
         ]);
-
+        $netSalary = $validatedData['salary'] + ($validatedData['bonuses'] ?? 0) - ($validatedData['deductions'] ?? 0);
+        $validatedData['net_salary'] = $netSalary;
         $payroll->update($validatedData);
 
         return redirect()->route('payrolls.index')->with('success', 'Payroll updated successfully.');

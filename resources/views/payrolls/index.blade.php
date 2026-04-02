@@ -53,11 +53,11 @@
                                 @foreach ($payrolls as $payroll)
                                     <tr>
                                         <td>{{ $payroll->employee->name }}</td>
-                                        <td>{{ $payroll->salary }}</td>
-                                        <td>{{ $payroll->bonuses }}</td>
-                                        <td>{{ $payroll->deductions }}</td>
-                                        <td>{{ $payroll->net_salary }}</td>
-                                        <td>{{ $payroll->pay_date }}</td>
+                                        <td>{{ number_format($payroll->salary ?? 0, 0, ',', '.') }}</td>
+                                        <td>{{ number_format($payroll->bonuses ?? 0, 0, ',', '.') }}</td>
+                                        <td>{{ number_format($payroll->deductions ?? 0, 0, ',', '.') }}</td>
+                                        <td>{{ number_format($payroll->net_salary ?? 0, 0, ',', '.') }}</td>
+                                        <td>{{ \Carbon\Carbon::parse($payroll->pay_date)->format('d F Y') }}</td>
                                         <td>
                                             <a href="{{ route('payrolls.show', $payroll->id) }}"
 

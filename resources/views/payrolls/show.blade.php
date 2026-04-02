@@ -28,46 +28,71 @@
             <section class="section">
                 <div class="card">
                     <div class="card-header">
-                        <h5 class="card-title">
-                            Detail Payroll
-                        </h5>
+                        <h5 class="card-title">Detail Payroll</h5>
                     </div>
+
                     <div class="card-body">
-                    
-                    <div class="mb-3">
-                        <label for="">Name</label>
-                        <p>{{ $payroll->employee->name }}</p>
-                    </div>
 
-                    <div class="mb-3">
-                        <label for="">Salary</label>
-                        <p>{{ number_format($payroll->salary) }}</p>
-                    </div>
+                        <!-- PRINT AREA -->
+                        <div id="print-area">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <strong>Name</strong>
+                                        <p>{{ $payroll->employee->name }}</p>
+                                    </div>
 
-                    <div class="mb-3">
-                        <label for="">Bonuses</label>
-                        <p>{{ number_format($payroll->bonuses) }}</p>
-                    </div>
+                                    <div class="mb-3">
+                                        <strong>Salary</strong>
+                                        <p>{{ number_format($payroll->salary ?? 0, 0, ',', '.') }}</p>
+                                    </div>
 
-                    <div class="mb-3">
-                        <label for="">Deductions</label>
-                        <p>{{ number_format($payroll->deductions) }}</p>
-                    </div>
+                                    <div class="mb-3">
+                                        <strong>Bonuses</strong>
+                                        <p>{{ number_format($payroll->bonuses ?? 0, 0, ',', '.') }}</p>
+                                    </div>
 
-                    <div class="mb-3">
-                        <label for="">Net Salary</label>
-                        <p>{{ number_format($payroll->net_salary) }}</p>
-                    </div>
+                                    <div class="mb-3">
+                                        <strong>Deductions</strong>
+                                        <p>{{ number_format($payroll->deductions ?? 0, 0, ',', '.') }}</p>
+                                    </div>
+                                </div>
 
-                    <div class="mb-3">
-                        <label for="">Pay Date</label>
-                        <p>{{ \Carbon\Carbon::parse($payroll->pay_date)->format('d F Y') }}</p>
-                    </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <strong>Net Salary</strong>
+                                        <p>{{ number_format($payroll->net_salary ?? 0, 0, ',', '.') }}</p>
+                                    </div>
 
-                    <button type="button" id="print" class="btn btn-primary"><span class="bi bi-printer"></span> Print</button>
-                    <a href="{{ route('payrolls.index') }}" class="btn btn-secondary">Back</a>
+                                    <div class="mb-3">
+                                        <strong>Pay Date</strong>
+                                        <p>{{ \Carbon\Carbon::parse($payroll->pay_date)->format('d F Y') }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END PRINT AREA -->
+
+                        <!-- BUTTON DI LUAR -->
+                        <a href="{{ route('payrolls.index') }}" class="btn btn-secondary">Back</a>
+                        <button type="button" id="btn-print" class="btn btn-primary">
+                            <span class="bi bi-printer"></span> Print
+                        </button>
+
+                    </div>
                 </div>
-
             </section>
         </div>
-    @endsection
+    </div>
+
+    <script>
+        document.getElementById('btn-print').addEventListener('click', function() {
+            let printContents = document.getElementById('print-area').innerHTML;
+            let originalContents = document.body.innerHTML;
+
+            document.body.innerHTML = printContents;
+            window.print();
+            document.body.innerHTML = originalContents;
+        });
+    </script>
+@endsection
