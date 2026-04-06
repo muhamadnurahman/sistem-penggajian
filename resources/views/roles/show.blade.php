@@ -43,7 +43,12 @@
                         <label for="">Description</label>
                         <p>{{ $role->description }}</p>
                     </div>
-                    
+
+                    <div class="mb-3">
+                        <label for="redirect_to" class="form-label">Redirect To</label>
+                        <p>{{ $role->redirect_to }}</p>
+                    </div>
+
                     <div class="mb-3">
                         <label for="">Created At</label>
                         <p>{{ $role->created_at->format('d F Y H:i:s') }}</p>

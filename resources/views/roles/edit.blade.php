@@ -64,6 +64,18 @@
                                 @enderror
                             </div>
 
+                            <div class="mb-3">
+                                <label for="redirect_to" class="form-label">Redirect To</label>
+                                <select class="form-control" id="redirect_to" name="redirect_to" required>
+                                    <option value="">-- Pilih --</option>
+                                    <option value="dashboard" {{ old('redirect_to', $role->redirect_to) == 'dashboard' ? 'selected' : '' }}>Dashboard (Admin/HRD)</option>
+                                    <option value="employee.dashboard" {{ old('redirect_to', $role->redirect_to) == 'employee.dashboard' ? 'selected' : '' }}>Employee Dashboard</option>
+                                </select>
+                                @error('redirect_to')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+
                             <button type="submit" class="btn btn-primary">Update Role</button>
                             <a href="{{ route('roles.index') }}" class="btn btn-secondary">Back to List</a>
 

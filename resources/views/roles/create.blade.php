@@ -33,7 +33,7 @@
                         </h5>
                     </div>
                     <div class="card-body">
-                    
+
                         <form action="{{ route('roles.store') }}" method="POST">
                             @csrf
 
@@ -49,6 +49,18 @@
                                 <label for="description" class="form-label">Description</label>
                                 <textarea name="description" class="form-control" @error('description') is-invalid @enderror></textarea>
                                 @error('description')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="redirect_to" class="form-label">Redirect To</label>
+                                <select class="form-control" id="redirect_to" name="redirect_to" required>
+                                    <option value="">-- Pilih --</option>
+                                    <option value="dashboard" {{ old('redirect_to') == 'dashboard' ? 'selected' : '' }}>Dashboard (Admin/HRD)</option>
+                                    <option value="employee.dashboard" {{ old('redirect_to') == 'employee.dashboard' ? 'selected' : '' }}>Employee Dashboard</option>
+                                </select>
+                                @error('redirect_to')
                                     <div class="text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
