@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('payrolls', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->foreignUuid('employee_id')->constrained('employees');
+            $table->foreignUuid('employee_id')->constrained('employees')->onDelete('restrict');
             $table->decimal('salary', 10, 2);
             $table->decimal('bonuses', 10, 2)->nullable();
             $table->decimal('deductions', 10, 2)->nullable();
