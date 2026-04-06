@@ -66,41 +66,68 @@
                 <div class="sidebar-menu">
                     <ul class="menu">
                         <li class="sidebar-title">Menu</li>
-                        <li class="sidebar-item active ">
+
+                        @php
+                            $UserSideBar = Auth::user()->employee?->role?->redirect_to;
+                        @endphp
+
+                        @if($UserSideBar === 'dashboard')
+                        <li class="sidebar-item {{ request()->routeIs('dashboard') ? 'active' : '' }}">
                             <a href="{{ route('dashboard') }}" class='sidebar-link'>
                                 <i class="bi bi-grid-fill"></i>
                                 <span>Dashboard</span>
                             </a>
                         </li>
-                        <li class="sidebar-item">
+                        <li class="sidebar-item {{ request()->routeIs('employees.index') ? 'active' : '' }}">
                             <a href="{{ route('employees.index') }}" class='sidebar-link'>
                                 <i class="bi bi-people-fill"></i>
                                 <span>Employees</span>
                             </a>
                         </li>
-                        <li class="sidebar-item">
+                        <li class="sidebar-item {{ request()->routeIs('departments.index') ? 'active' : '' }}">
                             <a href="{{ route('departments.index') }}" class='sidebar-link'>
                                 <i class="bi bi-briefcase"></i>
                                 <span>Departments</span>
                             </a>
                         </li>
-                        <li class="sidebar-item">
+                        <li class="sidebar-item {{ request()->routeIs('roles.index') ? 'active' : '' }}">
                             <a href="{{ route('roles.index') }}" class='sidebar-link'>
                                 <i class="bi bi-tag"></i>
                                 <span>Roles</span>
                             </a>
                         </li>
-                        <li class="sidebar-item">
+                        <li class="sidebar-item {{ request()->routeIs('payrolls.index') ? 'active' : '' }}">
                             <a href="{{ route('payrolls.index') }}" class='sidebar-link'>
                                 <i class="bi bi-currency-dollar"></i>
                                 <span>Payrolls</span>
                             </a>
                         </li>
-                        <li class="sidebar-item">
-                            <a href="{{ route('logout') }}" class='sidebar-link'>
-                                <i class="bi bi-box-arrow-right"></i>
-                                <span>Logout</span>
+                        @endif
+
+                        @if($UserSideBar === 'employee.dashboard')
+                        <li class="sidebar-item {{ request()->routeIs('employee.dashboard') ? 'active' : '' }}">
+                            <a href="{{ route('employee.dashboard') }}" class='sidebar-link'>
+                                <i class="bi bi-grid-fill"></i>
+                                <span>Dashboard</span>
                             </a>
+                        </li>
+
+                        <li class="sidebar-item {{ request()->routeIs('employee.payrolls.index') ? 'active' : '' }}">
+                            <a href="{{ route('employee.payrolls.index') }}" class='sidebar-link'>
+                                <i class="bi bi-currency-dollar"></i>
+                                <span>Payrolls</span>
+                            </a>
+                        </li>
+                        @endif
+
+                        <li class="sidebar-item">
+                            <form action="{{ route('logout') }}" method="POST">
+                                @csrf
+                                <button type="submit" class="btn btn-link sidebar-link">
+                                    <i class="bi bi-box-arrow-right"></i>
+                                    <span>Logout</span>
+                                </button>
+                            </form>
                         </li>
                     </ul>
                 </div>
