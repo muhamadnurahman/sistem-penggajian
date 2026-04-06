@@ -28,6 +28,17 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
+        $employee = Auth::user()->employee;
+
+        if($employee && $employee->status === 'inactive') {
+            Auth::guard('web')->logout();
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
+
+            return redirect()->route('login')
+            ->withErrors(['email' => 'Akun anda sudah tidak aktif lagi, tolong hubungi admin.']);
+        }
+
         $redirectTo = Auth::user()->employee?->role?->redirect_to ?? 'dashboard';
 
         return redirect()->route($redirectTo);
@@ -44,6 +55,6 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerateToken();
 
-        return redirect('/');
+        return redirect('login');
     }
 }
