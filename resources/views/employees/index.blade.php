@@ -37,6 +37,15 @@
                                 Add Employee
                             </a>
                         </div>
+
+                        @if (session('generated_password'))
+                            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                                <strong>Password employee baru:</strong> {{ session('generated_password') }}
+                                <br><small>Catat password ini, tidak akan ditampilkan lagi!</small>
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                            </div>
+                        @endif
+
                         <table class="table table-striped" id="table1">
                             <thead>
                                 <tr>
@@ -44,7 +53,7 @@
                                     <th>Email</th>
                                     <th>Phone</th>
                                     <th>Department</th>
-                                    <th>Net Salary</th>
+                                    <th>Last Salary</th>
                                     <th>Role</th>
                                     <th>Status</th>
                                     <th>Option</th>
@@ -57,7 +66,8 @@
                                         <td>{{ $employee->email }}</td>
                                         <td>{{ $employee->phone_number }}</td>
                                         <td>{{ $employee->department->name }}</td>
-                                        <td>{{ number_format($employee->payrolls->last()->net_salary ?? 0, 0, ',', '.') }}</td>
+                                        <td>{{ number_format($employee->payrolls->last()->net_salary ?? 0, 0, ',', '.') }}
+                                        </td>
                                         <td>{{ $employee->role->name }}</td>
                                         <td>
                                             @if ($employee->status == 'active')
