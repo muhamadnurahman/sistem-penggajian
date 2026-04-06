@@ -7,24 +7,35 @@ use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\PayrollController;
+use App\Http\Controllers\EmployeeDashboardController;
+use App\Http\Controllers\EmployeePayrollController;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+Route::middleware('auth')->group(function () {
 
-//department
-Route::resource('departments', DepartmentController::class);
+    //dashboard
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/employee/dashboard', [EmployeeDashboardController::class, 'index'])->name('employee.dashboard');
 
-//employee
-Route::resource('employees', EmployeeController::class);
+    //department
+    Route::resource('departments', DepartmentController::class);
 
-//role
-Route::resource('roles', RoleController::class);
+    //employee
+    Route::resource('employees', EmployeeController::class);
 
-//payroll
-Route::resource('payrolls', PayrollController::class);
+    //role
+    Route::resource('roles', RoleController::class);
+
+    //payroll
+    Route::resource('payrolls', PayrollController::class);
+    Route::resource('employee/payrolls', EmployeePayrollController::class)->names([
+        'index' => 'employee.payrolls.index',
+        'show' => 'employee.payrolls.show',
+    ]);
+});
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -32,4 +43,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
