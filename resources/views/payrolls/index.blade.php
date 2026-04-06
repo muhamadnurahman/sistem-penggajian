@@ -28,7 +28,7 @@
                 <div class="card">
                     <div class="card-header">
                         <h5 class="card-title">
-                            Data Departments
+                            Data Payrolls
                         </h5>
                     </div>
                     <div class="card-body">
