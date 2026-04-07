@@ -11,7 +11,7 @@ use App\Http\Controllers\EmployeeDashboardController;
 use App\Http\Controllers\EmployeePayrollController;
 
 Route::get('/', function () {
-    return view('login');
+    return redirect()->route('login');
 });
 
 Route::middleware('auth')->group(function () {
