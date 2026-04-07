@@ -31,7 +31,7 @@ Route::middleware('auth')->group(function () {
 
     //payroll
     Route::resource('payrolls', PayrollController::class);
-    Route::get('/employee/payrolls', [EmployeePayrollController::class, 'index'])->name('employee.payrolls');
+    Route::get('/employee/payrolls', [EmployeePayrollController::class, 'index'])->name('employee.payrolls.index');
     Route::get('/employee/payrolls/{id}', [EmployeePayrollController::class, 'show'])->name('employee.payrolls.show');
 });
 
