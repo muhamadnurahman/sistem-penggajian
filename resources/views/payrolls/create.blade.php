@@ -78,10 +78,7 @@
                             
                             <div class="mb-3">
                                 <label for="email" class="form-label">Deductions</label>
-                                <input type="number" class="form-control datetime" name="deductions" required>
-                                @error('deductions')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
+                                <input type="number" id="deductions" class="form-control datetime" name="deductions" readonly>
                             </div>
 
                             <div class="mb-3">
@@ -102,4 +99,19 @@
 
             </section>
         </div>
+        <script>
+document.getElementById('employee_id').addEventListener('change', function() {
+    let employeeId = this.value;
+
+    if (employeeId) {
+        fetch('/get-kasbon/' + employeeId)
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('deductions').value = data;
+            });
+    } else {
+        document.getElementById('deductions').value = '';
+    }
+});
+</script>
     @endsection

@@ -49,8 +49,16 @@
                             @method('PUT')
 
                             <div class="mb-3">
+                                <label for="employee_id" class="form-label" hidden>Employee</label>
+                                <input type="text" class="form-control" id="employee_id" name="employee_id" value="{{ old('employee_id', $payroll->employee->id) }}" required hidden>
+                                @error('employee_id')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="mb-3">
                                 <label for="name" class="form-label">Name</label>
-                                <input type="text" class="form-control" id="name" name="name" value="{{ old('name', $payroll->employee->name) }}" required>
+                                <input type="text" class="form-control" id="name" name="name" value="{{ old('name', $payroll->employee->name) }}" required readonly>
                                 @error('name')
                                     <div class="text-danger">{{ $message }}</div>
                                 @enderror
