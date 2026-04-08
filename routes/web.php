@@ -9,6 +9,7 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\PayrollController;
 use App\Http\Controllers\EmployeeDashboardController;
 use App\Http\Controllers\EmployeePayrollController;
+use App\Http\Controllers\KasbonController;
 
 Route::get('/', function () {
     return redirect()->route('login');
@@ -33,6 +34,15 @@ Route::middleware('auth')->group(function () {
     Route::resource('payrolls', PayrollController::class);
     Route::get('/employee/payrolls', [EmployeePayrollController::class, 'index'])->name('employee.payrolls.index');
     Route::get('/employee/payrolls/{id}', [EmployeePayrollController::class, 'show'])->name('employee.payrolls.show');
+
+    //kasbon
+    Route::resource('kasbons', KasbonController::class);
+    Route::get('/get-kasbon/{id}', function ($id) {
+    return \App\Models\Kasbon::where('employee_id', $id)
+        ->where('status', 'approved')
+        ->where('is_paid', false)
+        ->sum('amount');
+});
 });
 
 Route::middleware('auth')->group(function () {
