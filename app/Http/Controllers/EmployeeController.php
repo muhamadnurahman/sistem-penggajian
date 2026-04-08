@@ -109,7 +109,7 @@ class EmployeeController extends Controller
             if (!empty($validatedData['password'])) {
                 $dataUser['password'] = bcrypt($validatedData['password']);
             }
-            $dataUser->user->update($dataUser);
+            $dataUser->save();
         }
 
         $employee->update($validatedData);

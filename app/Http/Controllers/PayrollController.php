@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Payroll;
 use App\Models\Employee;
+use App\Models\Kasbon;
 
 class PayrollController extends Controller
 {
@@ -24,16 +25,29 @@ class PayrollController extends Controller
     {
         $validatedData = $request->validate([
             'employee_id' => 'required|exists:employees,id',
-            'salary' => 'required|numeric',
-            'bonuses' => 'nullable|numeric',
-            'deductions' => 'nullable|numeric',
+            'salary' => 'required|numeric|min:0',
+            'bonuses' => 'nullable|numeric|min:0',
             'pay_date' => 'required|date',
         ]);
 
+        $totalKasbon = Kasbon::where('employee_id', $validatedData['employee_id'])
+            ->where('status', 'approved')
+            ->where('is_paid', false)
+            ->sum('amount');
+
+        $validatedData['deductions'] = $totalKasbon;
         $netSalary = $validatedData['salary'] + ($validatedData['bonuses'] ?? 0) - ($validatedData['deductions'] ?? 0);
         $validatedData['net_salary'] = $netSalary;
 
-        Payroll::create($validatedData);
+        $payroll = Payroll::create($validatedData);
+
+        Kasbon::where('employee_id', $validatedData['employee_id'])
+            ->where('status', 'approved')
+            ->where('is_paid', false)
+            ->update(
+                ['is_paid' => true,
+                 'payroll_id' => $payroll->id
+                ]);
 
         return redirect()->route('payrolls.index')->with('success', 'Payroll created successfully.');
     }
@@ -57,9 +71,8 @@ class PayrollController extends Controller
 
         $validatedData = $request->validate([
             'employee_id' => 'required|exists:employees,id',
-            'salary' => 'required|numeric',
-            'bonuses' => 'nullable|numeric',
-            'deductions' => 'nullable|numeric',
+            'salary' => 'required|numeric|min:0',
+            'bonuses' => 'nullable|numeric|min:0',
             'pay_date' => 'required|date',
         ]);
         $netSalary = $validatedData['salary'] + ($validatedData['bonuses'] ?? 0) - ($validatedData['deductions'] ?? 0);
@@ -72,6 +85,12 @@ class PayrollController extends Controller
     public function destroy($id)
     {
         $payroll = Payroll::findOrFail($id);
+
+        Kasbon::where('payroll_id', $payroll->id)
+        ->update([
+            'is_paid' => false,
+            'payroll_id' => null
+            ]);
         $payroll->delete();
 
         return redirect()->route('payrolls.index')->with('success', 'Payroll deleted successfully.');
