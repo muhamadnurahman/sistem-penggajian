@@ -102,6 +102,12 @@
                                 <span>Payrolls</span>
                             </a>
                         </li>
+                        <li class="sidebar-item {{ request()->routeIs('kasbons.index') ? 'active' : '' }}">
+                            <a href="{{ route('kasbons.index') }}" class='sidebar-link'>
+                                <i class="bi bi-currency-dollar"></i>
+                                <span>Kasbons</span>
+                            </a>
+                        </li>
                         @endif
 
                         @if($UserSideBar === 'employee.dashboard')
