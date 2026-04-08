@@ -18,6 +18,7 @@ class Employee extends Model
         'user_id',
         'role_id',
         'department_id',
+        'kasbon_id',
         'name',
         'email',
         'phone_number',
@@ -44,6 +45,11 @@ class Employee extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function kasbons()
+    {
+        return $this->hasMany(Kasbon::class);
     }
 
 }
