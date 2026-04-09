@@ -10,6 +10,7 @@ use App\Http\Controllers\PayrollController;
 use App\Http\Controllers\EmployeeDashboardController;
 use App\Http\Controllers\EmployeePayrollController;
 use App\Http\Controllers\KasbonController;
+use App\Http\Controllers\EmployeeKasbonController;
 
 Route::get('/', function () {
     return redirect()->route('login');
@@ -35,8 +36,14 @@ Route::middleware('auth')->group(function () {
     Route::get('/employee/payrolls', [EmployeePayrollController::class, 'index'])->name('employee.payrolls.index');
     Route::get('/employee/payrolls/{id}', [EmployeePayrollController::class, 'show'])->name('employee.payrolls.show');
 
-    //kasbon
+    //kasbon - admin
     Route::resource('kasbons', KasbonController::class);
+
+    //kasbon - employee (only create and index)
+    Route::get('/employee/kasbons', [EmployeeKasbonController::class, 'index'])->name('employee.kasbons.index');
+    Route::get('/employee/kasbons/create', [EmployeeKasbonController::class, 'create'])->name('employee.kasbons.create');
+    Route::post('/employee/kasbons', [EmployeeKasbonController::class, 'store'])->name('employee.kasbons.store');
+
     Route::get('/get-kasbon/{id}', function ($id) {
     return \App\Models\Kasbon::where('employee_id', $id)
         ->where('status', 'approved')

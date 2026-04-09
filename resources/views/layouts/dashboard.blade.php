@@ -104,7 +104,7 @@
                         </li>
                         <li class="sidebar-item {{ request()->routeIs('kasbons.index') ? 'active' : '' }}">
                             <a href="{{ route('kasbons.index') }}" class='sidebar-link'>
-                                <i class="bi bi-currency-dollar"></i>
+                                <i class="bi bi-wallet"></i>
                                 <span>Kasbons</span>
                             </a>
                         </li>
@@ -122,6 +122,13 @@
                             <a href="{{ route('employee.payrolls.index') }}" class='sidebar-link'>
                                 <i class="bi bi-currency-dollar"></i>
                                 <span>Payrolls</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-item {{ request()->routeIs('employee.kasbons.index') ? 'active' : '' }}">
+                            <a href="{{ route('employee.kasbons.index') }}" class='sidebar-link'>
+                                <i class="bi bi-wallet2"></i>
+                                <span>Kasbons</span>
                             </a>
                         </li>
                         @endif

@@ -25,9 +25,12 @@ class PayrollController extends Controller
     {
         $validatedData = $request->validate([
             'employee_id' => 'required|exists:employees,id',
-            'salary' => 'required|numeric|min:0',
-            'bonuses' => 'nullable|numeric|min:0',
+            'salary' => 'required|numeric|min:0|max:10000000000',
+            'bonuses' => 'nullable|numeric|min:0|max:10000000000',
             'pay_date' => 'required|date',
+        ], [
+            'salary.max' => 'Gaji tidak boleh lebih dari 10 miliar.',
+            'bonuses.max' => 'Bonus tidak boleh lebih dari 10 miliar.',
         ]);
 
         $totalKasbon = Kasbon::where('employee_id', $validatedData['employee_id'])
@@ -71,9 +74,12 @@ class PayrollController extends Controller
 
         $validatedData = $request->validate([
             'employee_id' => 'required|exists:employees,id',
-            'salary' => 'required|numeric|min:0',
-            'bonuses' => 'nullable|numeric|min:0',
+            'salary' => 'required|numeric|min:0|max:10000000000',
+            'bonuses' => 'nullable|numeric|min:0|max:10000000000',
             'pay_date' => 'required|date',
+        ], [
+            'salary.max' => 'Gaji tidak boleh lebih dari 10 miliar.',
+            'bonuses.max' => 'Bonus tidak boleh lebih dari 10 miliar.',
         ]);
         $netSalary = $validatedData['salary'] + ($validatedData['bonuses'] ?? 0) - ($validatedData['deductions'] ?? 0);
         $validatedData['net_salary'] = $netSalary;

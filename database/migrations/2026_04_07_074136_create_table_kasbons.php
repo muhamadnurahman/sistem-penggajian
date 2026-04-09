@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('kasbons', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->foreignUuid('employee_id')->constrained('employees')->onDelete('restrict');
-            $table->decimal('amount', 10, 2);
+            $table->decimal('amount', 15, 2);
             $table->string('description')->nullable();
             $table->enum('status', ['pending','approved','rejected'])->default('pending');
             $table->boolean('is_paid')->default(false);

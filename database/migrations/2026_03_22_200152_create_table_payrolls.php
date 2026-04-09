@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::create('payrolls', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->foreignUuid('employee_id')->constrained('employees')->onDelete('restrict');
-            $table->decimal('salary', 10, 2);
-            $table->decimal('bonuses', 10, 2)->nullable();
-            $table->decimal('deductions', 10, 2)->nullable();
-            $table->decimal('net_salary', 10, 2);
+            $table->decimal('salary', 15, 2);
+            $table->decimal('bonuses', 15, 2)->nullable();
+            $table->decimal('deductions', 15, 2)->nullable();
+            $table->decimal('net_salary', 15, 2);
             $table->date('pay_date');
             $table->timestamps();
             $table->softDeletes();

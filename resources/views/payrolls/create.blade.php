@@ -52,7 +52,9 @@
                                 <select class="form-control" id="employee_id" name="employee_id" required>
                                     <option value="">Select Employee</option>
                                     @foreach($employees as $employee)
-                                        <option value="{{ $employee->id }}">{{ $employee->name }}</option>
+                                        <option value="{{ $employee->id }}" {{ old('employee_id') == $employee->id ? 'selected' : '' }}>
+                                            {{ $employee->name }}
+                                        </option>
                                     @endforeach
                                 </select>
                                 @error('employee_id')
@@ -62,7 +64,7 @@
 
                             <div class="mb-3">
                                 <label for="email" class="form-label">Salary</label>
-                                <input type="number" class="form-control datetime" name="salary" required>
+                                <input type="number" class="form-control datetime" value="{{ old('salary') }}" name="salary" required>
                                 @error('salary')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -70,7 +72,7 @@
 
                             <div class="mb-3">
                                 <label for="email" class="form-label">Bonuses</label>
-                                <input type="number" class="form-control datetime" name="bonuses" required>
+                                <input type="number" class="form-control datetime" value="{{ old('bonuses') }}" name="bonuses" required>
                                 @error('bonuses')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -78,12 +80,12 @@
                             
                             <div class="mb-3">
                                 <label for="email" class="form-label">Deductions</label>
-                                <input type="number" id="deductions" class="form-control datetime" name="deductions" readonly>
+                                <input type="number" id="deductions" class="form-control datetime" value="{{ old('deductions') }}" name="deductions" readonly>
                             </div>
 
                             <div class="mb-3">
                                 <label for="email" class="form-label">Pay Date</label>
-                                <input type="date" class="form-control" name="pay_date" required>
+                                <input type="date" class="form-control" value="{{ old('pay_date') }}" name="pay_date" required>
                                 @error('pay_date')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
