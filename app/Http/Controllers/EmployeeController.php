@@ -30,7 +30,7 @@ class EmployeeController extends Controller
     {
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|email',
+            'email' => 'required|email|unique:employees,email|unique:users,email',
             'phone_number' => 'required|string|max:15',
             'address' => 'nullable|string',
             'hire_date' => 'required|date',
@@ -121,17 +121,32 @@ class EmployeeController extends Controller
     public function destroy($id)
     {
         $employee = Employee::findOrFail($id);
-        
+
+        if ($employee->payrolls()->exists()) {
+            return redirect()->route('employees.index')
+                ->with('error', 'Cannot delete employee with existing payroll records.');
+        }
+
+        if ($employee->kasbons()->exists()) {
+            return redirect()->route('employees.index')
+                ->with('error', 'Cannot delete employee with existing kasbon records.');
+        }
+
+        $newEmail = 'deleted_' . $employee->id . '_' . time() . '@deleted.local';
+        $employee->update([
+            'email' => $newEmail,
+        ]);
+
         if ($employee->user_id) {
             $employee->user->update([
-                'email' => 'deleted_' . $employee->user_id . '_' . $employee->user->email,
+                'email' => $newEmail,
             ]);
         }
 
-        $employee->update([
-            'status' => 'inactive',
-        ]);
+        // Soft delete the employee
+        $employee->delete();
 
-        return redirect()->route('employees.index')->with('success', 'Employee deleted successfully.');
+        return redirect()->route('employees.index')
+            ->with('success', 'Employee deleted successfully.');
     }
 }
